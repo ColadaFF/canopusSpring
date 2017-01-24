@@ -4,7 +4,6 @@ import co.com.ias.demos.canopus.domain.Store;
 import co.com.ias.demos.canopus.services.StoreServices;
 import co.com.ias.demos.canopus.specification.StoreSpecification;
 import io.reactivex.MaybeObserver;
-import io.reactivex.Observer;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import org.bson.types.ObjectId;

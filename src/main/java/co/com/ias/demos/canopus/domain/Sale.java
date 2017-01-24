@@ -1,24 +1,24 @@
 package co.com.ias.demos.canopus.domain;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.Date;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @Document(collection="sales")
-public class Sales {
+public class Sale {
     @Id
     private ObjectId id;
     @DBRef
-    private Location location;
+    private Store store;
     private Date saleDate;
     private Date deliveryDate;
 
-    public Sales(ObjectId id, Location location, Date saleDate, Date deliveryDate) {
+    public Sale(ObjectId id, Store store, Date saleDate, Date deliveryDate) {
         this.id = checkNotNull(id, "id can't be null");
-        this.location = checkNotNull(location, "location can't be null");
+        this.store = checkNotNull(store, "store can't be null");
         this.saleDate = checkNotNull(saleDate, "saleDate can't be null");
         this.deliveryDate = checkNotNull(deliveryDate, "deliveryDate can't be null");
     }
@@ -27,8 +27,8 @@ public class Sales {
         return id;
     }
 
-    public Location getLocation() {
-        return location;
+    public Store getStore() {
+        return store;
     }
 
     public Date getSaleDate() {
@@ -43,7 +43,7 @@ public class Sales {
     public String toString() {
         return "Sales{" +
                 "id=" + id +
-                ", location=" + location +
+                ", location=" + store +
                 ", saleDate=" + saleDate +
                 ", deliveryDate=" + deliveryDate + 
                 '}';
