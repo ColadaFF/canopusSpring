@@ -74,7 +74,9 @@ public class SalesServices implements SaleSpecification {
             
            List<Sale> sales = mongoTemplate.find(Query.query(Criteria.where("store").in(storesId).and("deliveryDate").is(dateObj)), Sale.class);
            return Observable.fromIterable(sales)
-                   .map(Sale::getStore);
+                   .map(Sale::getStore)
+                   .distinct(Store::getId);
+           
         } catch (ParseException e) {
             return Observable.error(e);
         }

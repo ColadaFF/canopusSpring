@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.function.Predicate;
 
 @Document(collection="sales")
 public class Sale {
@@ -15,6 +16,10 @@ public class Sale {
     private Store store;
     private Date saleDate;
     private Date deliveryDate;
+    
+   public Predicate<Sale> isSameStore = otherStore -> {
+       return this.getId().equals(otherStore.getId());
+   };
 
     public Sale(ObjectId id, Store store, Date saleDate, Date deliveryDate) {
         this.id = checkNotNull(id, "id can't be null");

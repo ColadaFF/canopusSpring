@@ -1,9 +1,9 @@
 package co.com.ias.demos.canopus.controllers;
 
 import co.com.ias.demos.canopus.domain.Sale;
+import co.com.ias.demos.canopus.domain.Store;
 import co.com.ias.demos.canopus.services.SalesServices;
 import co.com.ias.demos.canopus.specification.SalesSpecification;
-import static com.google.common.base.Preconditions.checkArgument;
 import io.reactivex.MaybeObserver;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @CrossOrigin(value = "*", origins = "*")
 @RestController(value = "sales")
@@ -85,10 +86,27 @@ public class SalesController implements SalesSpecification {
     }
 
     @Override
-    public CompletableFuture<List<Sale>> getSalesByStoreId(String[] stores, String deliveryDate) {
-        checkArgument(ObjectId.isValid(deliveryDate), "deliveryDate is not valid");
-        CompletableFuture<List<Sale>> completableFuture = new CompletableFuture<>();
-        
+    public CompletableFuture<List<Store>> getSalesByStoreId(String[] stores, String deliveryDate) {
+        checkNotNull(deliveryDate, "deliveryDate can't is not null");
+        CompletableFuture<List<Store>> completableFuture = new CompletableFuture<>();
+        salesServices.getStoresBySaleDate(stores, deliveryDate)
+                .toList()
+                .subscribe(new SingleObserver<List<Store>>() {
+            @Override
+            public void onSubscribe(Disposable dspsbl) {
+                System.out.println("Subscribed");
+            }
+
+            @Override
+            public void onSuccess(List<Store> t) {
+                completableFuture.complete(t);
+            }
+
+            @Override
+            public void onError(Throwable ex) {
+                completableFuture.obtrudeException(ex);
+            }
+        });
         return completableFuture;
     }
 

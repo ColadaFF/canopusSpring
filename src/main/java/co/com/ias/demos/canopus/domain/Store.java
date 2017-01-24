@@ -1,8 +1,15 @@
 package co.com.ias.demos.canopus.domain;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document()
 public class Store {
+    @Id
+    private ObjectId id;
     private String name;
     private Location location;
     private String address;
@@ -23,6 +30,10 @@ public class Store {
 
     public String getAddress() {
         return address;
+    }
+
+    public ObjectId getId() {
+        return id;
     }
 
     @Override

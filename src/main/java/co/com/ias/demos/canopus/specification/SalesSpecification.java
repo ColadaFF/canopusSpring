@@ -1,6 +1,7 @@
 package co.com.ias.demos.canopus.specification;
 
 import co.com.ias.demos.canopus.domain.Sale;
+import co.com.ias.demos.canopus.domain.Store;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import org.springframework.http.MediaType;
@@ -22,7 +23,7 @@ public interface SalesSpecification {
     
     @Async
     @RequestMapping(value = "/{deliveryDate}" ,method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    CompletableFuture<List<Sale>> getSalesByStoreId(@RequestParam( value= "store[]" ) String[] stores, 
+    CompletableFuture<List<Store>> getSalesByStoreId(@RequestParam( value= "store[]" ) String[] stores, 
             @PathVariable String deliveryDate);
     
 }
