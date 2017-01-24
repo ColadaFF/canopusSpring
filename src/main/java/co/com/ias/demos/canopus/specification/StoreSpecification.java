@@ -10,22 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 public interface StoreSpecification {
     @Async
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    Future<List<Store>> getStores();
+    CompletableFuture<List<Store>> getStores();
 
     @Async
     @RequestMapping(value = "/{storeId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    Future<Store> getStore(@PathVariable String storeId);
+    CompletableFuture<Store> getStore(@PathVariable String storeId);
 
     @Async
     @RequestMapping(value = "/zone/{zoneId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    Future<List<Store>> getStores(ObjectId zoneId);
+    CompletableFuture<List<Store>> getStores(String zoneId);
 
     @Async
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    Future<Store> createStore(@RequestBody Store store);
+    CompletableFuture<Store> createStore(@RequestBody Store store);
 }
